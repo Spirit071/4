@@ -9,10 +9,13 @@ private:
 
 public:
     ShiftText(const std::string& text, int key);
-    ~ShiftText() override;
+    ~ShiftText();
 
-    std::string encrypt() override;
-    std::string decrypt() override;
+    static std::string encrypt(const std::string& text, int key);
+    static std::string decrypt(const std::string& text, int key);
+
+    std::string encrypt();
+    std::string decrypt();
 };
 
 #endif // SHIFTTEXT_H

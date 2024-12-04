@@ -1,11 +1,15 @@
 #include "PlainText.h"
 
-PlainText::PlainText(const std::string& text) : text(text), isEncrypted(false) {}
+int PlainText::numOfTexts = 0;
+
+PlainText::PlainText(const std::string& text) : text(text), isEnc(false) {
+    numOfTexts++;
+}
 
 PlainText::~PlainText() {}
 
 bool PlainText::isEncrypted() const {
-    return isEncrypted;
+    return isEnc;
 }
 
 std::string PlainText::getText() const {

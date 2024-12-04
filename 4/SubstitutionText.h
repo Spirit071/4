@@ -2,17 +2,21 @@
 #define SUBSTITUTIONTEXT_H
 
 #include "PlainText.h"
+#include <unordered_map>
 
 class SubstitutionText : public PlainText {
 private:
-    std::string dictionaryFileName;
+    std::unordered_map<char, char> dictionary;
 
 public:
     SubstitutionText(const std::string& text, const std::string& dictionaryFileName);
-    ~SubstitutionText() override;
+    ~SubstitutionText();
 
-    std::string encrypt() override;
-    std::string decrypt() override;
+    static std::string encrypt(const std::string& text, const std::unordered_map<char, char>& dictionary);
+    static std::string decrypt(const std::string& text, const std::unordered_map<char, char>& dictionary);
+
+    std::string encrypt();
+    std::string decrypt();
 };
 
 #endif // SUBSTITUTIONTEXT_H

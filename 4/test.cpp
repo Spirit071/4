@@ -1,95 +1,47 @@
+#include "PlainText.h"
 #include "ShiftText.h"
-#include "SubstitutionText.h"
 #include "CaesarText.h"
-#include "FileHelper.h"
-#include "BonusText.h"
+#include "SubstitutionText.h"
+#include "FileHandler.h"
 #include <iostream>
 
-#define SHIFTING_KEY 10
-#define SUB_DICTIONARY_FILE_NAME "dictionary.csv"
-#define ENCRYPTED_FILE_NAME "encrypted.txt"
+int main() {
+    // Testing the text encryption/decryption
+    PlainText pt("Hello");
+    std::cout << "PlainText: " << pt.getText() << std::endl;
 
-using std::cout;
-using std::endl;
+    ShiftText st("Hello", 5);
+    std::cout << "ShiftText Encrypted: " << st.getText() << std::endl;
+    std::cout << "ShiftText Decrypted: " << st.decrypt() << std::endl;
 
-// local functions
-void Alice();
-PlainText Bob(SubstitutionText msg);
-PlainText Bob(ShiftText msg);
-PlainText Bob(CaesarText msg);
+    CaesarText ct("Hello");
+    std::cout << "CaesarText Encrypted: " << ct.getText() << std::endl;
+    std::cout << "CaesarText Decrypted: " << ct.decrypt() << std::endl;
 
-/*
-This is the main function of the program.
-It starts the conversation between Alice and Bob
-*/
-int main()
-{
-	Alice();
-	return 0;
-}
+    SubstitutionText sub("Hello", "dictionary.csv");
+    std::cout << "SubstitutionText Encrypted: " << sub.getText() << std::endl;
+    std::cout << "SubstitutionText Decrypted: " << sub.decrypt() << std::endl;
 
-/*
-This is Alice's part in the conversation.
-It gets a legal string from the user ans sends it to Bob in
-three different kinds of encryptions.
-It also prints every response from Bob.
-*/
-void Alice()
-{
-	std::string str;
-	cout << "Alice:" << endl;
-	cout << "Enter a message to send to Bob:" << endl;
-	std::cin >> str;
-	cout << endl;
+    // Testing the static field for the number of instances
+    std::cout << "Number of PlainText instances created: " << PlainText::numOfTexts << std::endl;
 
-	PlainText receive("");
+    // FileHandler Testing
 
-	cout << "Sending in Substitution mode..." << endl;
-	receive = Bob(SubstitutionText(str, SUB_DICTIONARY_FILE_NAME));
-	cout << endl << "Alice:" << endl << "Received back: " << receive.getText() << endl;
+    // Test 1: Read file content to string
+    std::string inputFile = "txt.example"; // Ensure this file exists with content
+    std::string fileContent = FileHandler::readFileToString(inputFile);
+    std::cout << "\nContent of " << inputFile << ":\n" << fileContent << std::endl;
 
-	cout << "Sending in Shift mode..." << endl;
-	receive = Bob(ShiftText(str, SHIFTING_KEY));
-	cout << endl << "Alice:" << endl << "Received back: " << receive.getText() << endl;
+    // Test 2: Write words from input file to output file
+    std::string outputFile = "output.txt";
+    FileHandler::writeWordsToFile(inputFile, outputFile);
+    std::cout << "\nWords from " << inputFile << " written to " << outputFile << std::endl;
 
-	cout << "Sending in Caesar mode..." << endl;
-	receive = Bob(CaesarText(str));
-	cout << endl << "Alice:" << endl << "Received back: " << receive.getText() << endl;
-}
+    // Test 3: Save text to file
+    std::string textToSave = "This is some text to be saved in a file.";
+    std::string saveFile = "savedText.txt";
+    FileHandler::saveTextInFile(textToSave, saveFile);
+    std::cout << "\nText saved to " << saveFile << std::endl;
 
-/*
-This function handles Bob's part of the conversation
-when he receives a message encrypted in Substitution mode
-*/
-PlainText Bob(SubstitutionText msg)
-{
-	cout << endl << "Bob:" << endl;
-	cout << "The received message: " << msg.getText() << endl;
-	cout << "The decrypted message is: " << msg.decrypt() << endl;
-	return PlainText("Thank you Alice!");
-}
-
-/*
-This function handles Bob's part of the conversation
-when he receives a message encrypted in Shift mode
-*/
-PlainText Bob(ShiftText msg)
-{
-	cout << endl << "Bob:" << endl;
-	cout << "The received message: " << msg.getText() << endl;
-	cout << "The decrypted message is: " << msg.decrypt() << endl;
-
-	return PlainText("Thank you again Alice!");
-}
-
-/*
-This function handles Bob's part of the conversation
-when he receives a message encrypted in Caesar mode
-*/
-PlainText Bob(CaesarText msg)
-{
-	cout << endl << "Bob:" << endl;
-	cout << "The received message: " << msg.getText() << endl;
-	cout << "The decrypted message is: " << msg.decrypt() << endl;
-	return PlainText("Many Thanks Alice!");
+    return 0;
 }

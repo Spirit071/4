@@ -4,19 +4,18 @@
 #include <string>
 
 class PlainText {
-private:
+protected:
     std::string text;
-    bool isEncrypted;
+    bool isEnc;
 
 public:
     PlainText(const std::string& text);
     virtual ~PlainText();
 
-    bool isEncryptedStatus() const;
+    bool isEncrypted() const;
     std::string getText() const;
 
-    virtual std::string encrypt() = 0;
-    virtual std::string decrypt() = 0;
+    static int numOfTexts;
 };
 
 #endif // PLAINTEXT_H

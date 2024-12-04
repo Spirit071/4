@@ -5,11 +5,8 @@
 
 class CaesarText : public ShiftText {
 public:
-    CaesarText(const std::string& text); // Constructor
-    ~CaesarText() override;
-
-    std::string encrypt() override;      // Override encrypt
-    std::string decrypt() override;      // Override decrypt
+    CaesarText(const std::string& text);
+    ~CaesarText();
 };
 
 #endif // CAESARTEXT_H
