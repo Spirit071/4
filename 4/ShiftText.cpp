@@ -1,9 +1,10 @@
 #include "ShiftText.h"
 
+
 ShiftText::ShiftText(const std::string& text, int key) 
     : PlainText(text), key(key) {
     this->text = encrypt(text, key);
-    isEnc = true;
+    algorithm = "ShiftText";
 }
 
 ShiftText::~ShiftText() {}
@@ -27,12 +28,10 @@ std::string ShiftText::decrypt(const std::string& text, int key) {
 
 std::string ShiftText::encrypt() {
     text = encrypt(text, key);
-    isEnc = true;
     return text;
 }
 
 std::string ShiftText::decrypt() {
     text = decrypt(text, key);
-    isEnc = false;
     return text;
 }

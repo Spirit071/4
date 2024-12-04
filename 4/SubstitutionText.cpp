@@ -15,7 +15,7 @@ SubstitutionText::SubstitutionText(const std::string& text, const std::string& d
     }
 
     this->text = encrypt(text, dictionary);
-    isEnc = true;
+    algorithm = "SubstitutionText";
 }
 
 SubstitutionText::~SubstitutionText() {}
@@ -42,12 +42,10 @@ std::string SubstitutionText::decrypt(const std::string& text, const std::unorde
 
 std::string SubstitutionText::encrypt() {
     text = encrypt(text, dictionary);
-    isEnc = true;
     return text;
 }
 
 std::string SubstitutionText::decrypt() {
     text = decrypt(text, dictionary);
-    isEnc = false;
     return text;
 }
